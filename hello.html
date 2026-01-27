@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МамаЭксперт — Гид по детским товарам для малышей 0-5 лет</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fef9f3 0%, #fdf2f8 100%);
+            min-height: 100vh;
+            color: #5c4a5a;
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        header {
+            background: linear-gradient(135deg, #f8e1e8 0%, #e8d4f0 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(180, 150, 170, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #9b6b8a;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #c9a0b8;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #7a5a6a;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.6);
+            color: #9b6b8a;
+        }
+
+        /* Hero секция */
+        .hero {
+            background: linear-gradient(135deg, #fce4ec 0%, #e8d5f0 50%, #d4e8f0 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #8b5a7a;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #7a6a7a;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Основной контент */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Фильтры по возрасту */
+        .age-filters {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(180, 150, 170, 0.1);
+        }
+
+        .age-filters h2 {
+            color: #9b6b8a;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e8d4f0;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #7a5a6a;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #f8e1e8 0%, #e8d4f0 100%);
+            border-color: #c9a0b8;
+            color: #8b5a7a;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            box-shadow: 0 4px 15px rgba(180, 150, 170, 0.3);
+        }
+
+        /* Секция статей */
+        .section-title {
+            color: #9b6b8a;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #f8e1e8, #c9a0b8);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(180, 150, 170, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(180, 150, 170, 0.2);
+        }
+
+        .article-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .article-image.baby { background: linear-gradient(135deg, #fce4ec, #f8bbd9); }
+        .article-image.toys { background: linear-gradient(135deg, #e8d4f0, #d1c4e9); }
+        .article-image.food { background: linear-gradient(135deg, #d4f0e8, #c8e6c9); }
+        .article-image.care { background: linear-gradient(135deg, #d4e8f0, #b3e5fc); }
+        .article-image.dev { background: linear-gradient(135deg, #fff9c4, #ffe082); }
+        .article-image.safety { background: linear-gradient(135deg, #ffe0b2, #ffcc80); }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: linear-gradient(135deg, #f8e1e8 0%, #e8d4f0 100%);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #9b6b8a;
+            margin-bottom: 0.8rem;
+        }
+
+        .article-card h3 {
+            color: #7a5a6a;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .article-card p {
+            color: #8a7a8a;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: #c9a0b8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: #9b6b8a;
+        }
+
+        /* Подписка */
+        .subscribe {
+            background: linear-gradient(135deg, #f8e1e8 0%, #e8d4f0 50%, #d4e8f0 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .subscribe h2 {
+            color: #8b5a7a;
+            margin-bottom: 1rem;
+        }
+
+        .subscribe p {
+            color: #7a6a7a;
+            margin-bottom: 1.5rem;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .subscribe-form input {
+            padding: 1rem 1.5rem;
+            border: 2px solid white;
+            border-radius: 25px;
+            font-size: 1rem;
+            width: 300px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .subscribe-form input:focus {
+            border-color: #c9a0b8;
+        }
+
+        .subscribe-form button {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #c9a0b8 0%, #9b6b8a 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(155, 107, 138, 0.4);
+        }
+
+        /* Сравнение брендов */
+        .brands-comparison {
+            margin-bottom: 3rem;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .brand-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(180, 150, 170, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(180, 150, 170, 0.2);
+        }
+
+        .brand-card.top-pick::before {
+            content: 'Выбор мам';
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: linear-gradient(135deg, #c9a0b8, #9b6b8a);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .brand-logo {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fef9f3, #fdf2f8);
+            border-radius: 12px;
+        }
+
+        .brand-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #7a5a6a;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .brand-country {
+            font-size: 0.85rem;
+            color: #a090a0;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .brand-ratings {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0.6rem;
+            background: #fef9f3;
+            border-radius: 8px;
+        }
+
+        .rating-source {
+            font-size: 0.8rem;
+            color: #7a6a7a;
+        }
+
+        .rating-value {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 600;
+            color: #9b6b8a;
+        }
+
+        .rating-value .star {
+            color: #ffc107;
+        }
+
+        .brand-avg {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #f8e1e8;
+            text-align: center;
+        }
+
+        .brand-avg-label {
+            font-size: 0.85rem;
+            color: #a090a0;
+        }
+
+        .brand-avg-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #9b6b8a;
+        }
+
+        .brand-reviews {
+            font-size: 0.8rem;
+            color: #a090a0;
+            text-align: center;
+            margin-top: 0.3rem;
+        }
+
+        .brand-links {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .buy-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, #c9a0b8 0%, #9b6b8a 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .buy-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(155, 107, 138, 0.4);
+        }
+
+        .buy-link.ozon {
+            background: linear-gradient(135deg, #005bff 0%, #003d99 100%);
+        }
+
+        .buy-link.wildberries {
+            background: linear-gradient(135deg, #cb11ab 0%, #8a0c75 100%);
+        }
+
+        .buy-link.yandex {
+            background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
+            color: #333;
+        }
+
+        .buy-link .shop-name {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .buy-link .arrow {
+            font-size: 1rem;
+        }
+
+        /* Футер */
+        footer {
+            background: linear-gradient(135deg, #f8e1e8 0%, #e8d4f0 100%);
+            padding: 2rem;
+            text-align: center;
+            color: #7a5a6a;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #9b6b8a;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .subscribe-form input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">Мама<span>Эксперт</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#articles">Статьи</a></li>
+                    <li><a href="#brands">Бренды</a></li>
+                    <li><a href="#ages">По возрасту</a></li>
+                    <li><a href="#subscribe">Подписка</a></li>
+                    <li><a href="#about">О нас</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Помогаем выбрать лучшее для малыша</h1>
+        <p>Экспертные обзоры детских товаров, полезные статьи о развитии и уходе за детьми от 0 до 5 лет</p>
+    </section>
+
+    <main>
+        <section class="age-filters" id="ages">
+            <h2>Выберите возраст вашего малыша</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-age="all">Все возрасты</button>
+                <button class="filter-btn" data-age="0-6">0–6 месяцев</button>
+                <button class="filter-btn" data-age="6-12">6–12 месяцев</button>
+                <button class="filter-btn" data-age="1-2">1–2 года</button>
+                <button class="filter-btn" data-age="2-3">2–3 года</button>
+                <button class="filter-btn" data-age="3-5">3–5 лет</button>
+            </div>
+        </section>
+
+        <section class="brands-comparison" id="brands">
+            <h2 class="section-title">Сравнение ведущих брендов</h2>
+            <div class="brands-grid">
+                <!-- Philips Avent -->
+                <div class="brand-card top-pick">
+                    <div class="brand-logo">🍼</div>
+                    <div class="brand-name">Philips Avent</div>
+                    <div class="brand-country">Нидерланды</div>
+                    <div class="brand-ratings">
+                        <div class="rating-row">
+                            <span class="rating-source">Ozon</span>
+                            <span class="rating-value"><span class="star">★</span> 4.9</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Wildberries</span>
+                            <span class="rating-value"><span class="star">★</span> 4.8</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Яндекс Маркет</span>
+                            <span class="rating-value"><span class="star">★</span> 4.9</span>
+                        </div>
+                    </div>
+                    <div class="brand-avg">
+                        <div class="brand-avg-label">Средняя оценка</div>
+                        <div class="brand-avg-value">4.87</div>
+                        <div class="brand-reviews">12 540 отзывов</div>
+                    </div>
+                    <div class="brand-links">
+                        <!-- ЗАГЛУШКИ: замените YOUR_REF_ID на ваш партнёрский ID -->
+                        <a href="https://ozon.ru/t/YOUR_REF_ID_AVENT_OZON" class="buy-link ozon" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Ozon</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://wildberries.ru/catalog/0/search.aspx?search=philips+avent&ref=YOUR_REF_ID_AVENT_WB" class="buy-link wildberries" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Wildberries</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://market.yandex.ru/search?text=philips+avent&clid=YOUR_REF_ID_AVENT_YM" class="buy-link yandex" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Яндекс Маркет</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pigeon -->
+                <div class="brand-card">
+                    <div class="brand-logo">🎀</div>
+                    <div class="brand-name">Pigeon</div>
+                    <div class="brand-country">Япония</div>
+                    <div class="brand-ratings">
+                        <div class="rating-row">
+                            <span class="rating-source">Ozon</span>
+                            <span class="rating-value"><span class="star">★</span> 4.9</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Wildberries</span>
+                            <span class="rating-value"><span class="star">★</span> 4.8</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Яндекс Маркет</span>
+                            <span class="rating-value"><span class="star">★</span> 4.8</span>
+                        </div>
+                    </div>
+                    <div class="brand-avg">
+                        <div class="brand-avg-label">Средняя оценка</div>
+                        <div class="brand-avg-value">4.83</div>
+                        <div class="brand-reviews">6 420 отзывов</div>
+                    </div>
+                    <div class="brand-links">
+                        <a href="https://ozon.ru/t/YOUR_REF_ID_PIGEON_OZON" class="buy-link ozon" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Ozon</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://wildberries.ru/catalog/0/search.aspx?search=pigeon&ref=YOUR_REF_ID_PIGEON_WB" class="buy-link wildberries" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Wildberries</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://market.yandex.ru/search?text=pigeon&clid=YOUR_REF_ID_PIGEON_YM" class="buy-link yandex" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Яндекс Маркет</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chicco -->
+                <div class="brand-card">
+                    <div class="brand-logo">👶</div>
+                    <div class="brand-name">Chicco</div>
+                    <div class="brand-country">Италия</div>
+                    <div class="brand-ratings">
+                        <div class="rating-row">
+                            <span class="rating-source">Ozon</span>
+                            <span class="rating-value"><span class="star">★</span> 4.8</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Wildberries</span>
+                            <span class="rating-value"><span class="star">★</span> 4.7</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Яндекс Маркет</span>
+                            <span class="rating-value"><span class="star">★</span> 4.8</span>
+                        </div>
+                    </div>
+                    <div class="brand-avg">
+                        <div class="brand-avg-label">Средняя оценка</div>
+                        <div class="brand-avg-value">4.77</div>
+                        <div class="brand-reviews">10 350 отзывов</div>
+                    </div>
+                    <div class="brand-links">
+                        <a href="https://ozon.ru/t/YOUR_REF_ID_CHICCO_OZON" class="buy-link ozon" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Ozon</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://wildberries.ru/catalog/0/search.aspx?search=chicco&ref=YOUR_REF_ID_CHICCO_WB" class="buy-link wildberries" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Wildberries</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://market.yandex.ru/search?text=chicco&clid=YOUR_REF_ID_CHICCO_YM" class="buy-link yandex" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Яндекс Маркет</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Fisher-Price -->
+                <div class="brand-card">
+                    <div class="brand-logo">🧸</div>
+                    <div class="brand-name">Fisher-Price</div>
+                    <div class="brand-country">США</div>
+                    <div class="brand-ratings">
+                        <div class="rating-row">
+                            <span class="rating-source">Ozon</span>
+                            <span class="rating-value"><span class="star">★</span> 4.7</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Wildberries</span>
+                            <span class="rating-value"><span class="star">★</span> 4.8</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Яндекс Маркет</span>
+                            <span class="rating-value"><span class="star">★</span> 4.7</span>
+                        </div>
+                    </div>
+                    <div class="brand-avg">
+                        <div class="brand-avg-label">Средняя оценка</div>
+                        <div class="brand-avg-value">4.73</div>
+                        <div class="brand-reviews">8 920 отзывов</div>
+                    </div>
+                    <div class="brand-links">
+                        <a href="https://ozon.ru/t/YOUR_REF_ID_FISHER_OZON" class="buy-link ozon" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Ozon</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://wildberries.ru/catalog/0/search.aspx?search=fisher+price&ref=YOUR_REF_ID_FISHER_WB" class="buy-link wildberries" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Wildberries</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://market.yandex.ru/search?text=fisher+price&clid=YOUR_REF_ID_FISHER_YM" class="buy-link yandex" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Яндекс Маркет</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Happy Baby -->
+                <div class="brand-card">
+                    <div class="brand-logo">🚗</div>
+                    <div class="brand-name">Happy Baby</div>
+                    <div class="brand-country">Россия</div>
+                    <div class="brand-ratings">
+                        <div class="rating-row">
+                            <span class="rating-source">Ozon</span>
+                            <span class="rating-value"><span class="star">★</span> 4.6</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Wildberries</span>
+                            <span class="rating-value"><span class="star">★</span> 4.7</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="rating-source">Яндекс Маркет</span>
+                            <span class="rating-value"><span class="star">★</span> 4.6</span>
+                        </div>
+                    </div>
+                    <div class="brand-avg">
+                        <div class="brand-avg-label">Средняя оценка</div>
+                        <div class="brand-avg-value">4.63</div>
+                        <div class="brand-reviews">15 780 отзывов</div>
+                    </div>
+                    <div class="brand-links">
+                        <a href="https://ozon.ru/t/YOUR_REF_ID_HAPPYBABY_OZON" class="buy-link ozon" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Ozon</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://wildberries.ru/catalog/0/search.aspx?search=happy+baby&ref=YOUR_REF_ID_HAPPYBABY_WB" class="buy-link wildberries" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Wildberries</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="https://market.yandex.ru/search?text=happy+baby&clid=YOUR_REF_ID_HAPPYBABY_YM" class="buy-link yandex" target="_blank" rel="noopener">
+                            <span class="shop-name">Купить на Яндекс Маркет</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles">
+            <h2 class="section-title">Полезные статьи</h2>
+            <div class="articles-grid">
+                <article class="article-card" data-age="0-6">
+                    <div class="article-image baby">👶</div>
+                    <div class="article-content">
+                        <span class="article-tag">0–6 месяцев</span>
+                        <h3>Как выбрать первую коляску для новорождённого</h3>
+                        <p>Разбираемся в типах колясок и на что обратить внимание при покупке.</p>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="article-card" data-age="6-12">
+                    <div class="article-image toys">🧸</div>
+                    <div class="article-content">
+                        <span class="article-tag">6–12 месяцев</span>
+                        <h3>Лучшие развивающие игрушки для малышей до года</h3>
+                        <p>Подборка безопасных игрушек, которые помогут в развитии моторики.</p>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="article-card" data-age="1-2">
+                    <div class="article-image food">🥣</div>
+                    <div class="article-content">
+                        <span class="article-tag">1–2 года</span>
+                        <h3>Переход на общий стол: советы педиатра</h3>
+                        <p>Как правильно вводить новые продукты и организовать питание малыша.</p>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="article-card" data-age="2-3">
+                    <div class="article-image care">🛁</div>
+                    <div class="article-content">
+                        <span class="article-tag">2–3 года</span>
+                        <h3>Приучение к горшку: мягкий подход</h3>
+                        <p>Пошаговая методика без стресса для ребёнка и родителей.</p>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="article-card" data-age="3-5">
+                    <div class="article-image dev">🎨</div>
+                    <div class="article-content">
+                        <span class="article-tag">3–5 лет</span>
+                        <h3>Подготовка к детскому саду: что нужно знать</h3>
+                        <p>Психологическая подготовка и необходимые вещи для детского сада.</p>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="article-card" data-age="0-6">
+                    <div class="article-image safety">🍼</div>
+                    <div class="article-content">
+                        <span class="article-tag">0–6 месяцев</span>
+                        <h3>Обзор детских бутылочек: какую выбрать</h3>
+                        <p>Сравнение популярных брендов по безопасности и удобству.</p>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="subscribe" id="subscribe">
+            <h2>Подпишитесь на наши советы</h2>
+            <p>Получайте полезные статьи и обзоры на вашу почту раз в неделю</p>
+            <form class="subscribe-form">
+                <input type="email" placeholder="Ваш email" required>
+                <button type="submit">Подписаться</button>
+            </form>
+        </section>
+    </main>
+
+    <footer id="about">
+        <p><strong>МамаЭксперт</strong> — ваш надёжный помощник в мире детских товаров</p>
+        <p>Все обзоры основаны на реальном опыте мам и рекомендациях специалистов</p>
+        <p>© 2026 МамаЭксперт. <a href="#">Политика конфиденциальности</a></p>
+    </footer>
+
+    <script>
+        // Фильтрация статей по возрасту
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const articles = document.querySelectorAll('.article-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Убираем active у всех кнопок
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Добавляем active к нажатой кнопке
+                button.classList.add('active');
+
+                const selectedAge = button.dataset.age;
+
+                articles.forEach(article => {
+                    if (selectedAge === 'all' || article.dataset.age === selectedAge) {
+                        article.style.display = 'block';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Обработка формы подписки
+        document.querySelector('.subscribe-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            alert('Спасибо за подписку! Мы будем отправлять полезные материалы на ' + email);
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
