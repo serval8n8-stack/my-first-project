@@ -1,0 +1,32 @@
+# Конфиденциальные файлы
+config.json
+.env
+.env.local
+.env.*.local
+
+# Партнёрские ID и секреты
+secrets.json
+credentials.json
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Логи
+*.log
+npm-debug.log*
+
+# Node.js (на случай добавления зависимостей)
+node_modules/
+package-lock.json
+
+# Временные файлы
+*.tmp
+*.temp

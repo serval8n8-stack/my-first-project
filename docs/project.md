@@ -8,9 +8,20 @@
 
 ```
 my-first-project/
-├── hello.html          # Главная страница сайта
+├── hello.html              # Главная страница сайта
+├── styles.css              # Стили (CSS)
+├── script.js               # Скрипты (JavaScript)
+├── .gitignore              # Игнорируемые файлы
+├── .github/
+│   ├── workflows/
+│   │   └── deploy.yml      # CI/CD: валидация и деплой на GitHub Pages
+│   └── ISSUE_TEMPLATE/
+│       └── task.yml        # Шаблон для создания задач
 └── docs/
-    └── project.md      # Документация
+    ├── project.md          # Документация
+    ├── TODO-ISSUES.md      # Задачи для создания в GitHub Issues
+    └── features/
+        └── loyalty-program.md
 ```
 
 ## Разделы сайта
@@ -150,9 +161,18 @@ YOUR_REF_ID_HAPPYBABY_YM
 
 ## TODO
 
-- [ ] Заменить заглушки реферальных ссылок на реальные
-- [ ] Добавить реальные изображения товаров
-- [ ] Подключить сервис email-рассылки (Mailchimp, SendPulse)
-- [ ] Добавить страницы отдельных статей
-- [ ] Настроить аналитику (Яндекс Метрика, Google Analytics)
-- [ ] Разместить на хостинге
+Задачи перенесены в [GitHub Issues](https://github.com/serval8n8-stack/my-first-project/issues).
+
+Подробное описание задач для создания Issues: [docs/TODO-ISSUES.md](TODO-ISSUES.md)
+
+---
+
+## CI/CD
+
+Проект настроен на автоматический деплой через GitHub Actions:
+- При пуше в `main` — валидация HTML и деплой на GitHub Pages
+- При pull request — только валидация HTML
+
+Для активации GitHub Pages:
+1. Перейдите в Settings → Pages
+2. Source: GitHub Actions

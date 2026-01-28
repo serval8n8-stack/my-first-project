@@ -1,0 +1,31 @@
+name: Задача
+description: Новая задача для проекта
+title: "[Задача]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Описание задачи
+      description: Что нужно сделать?
+      placeholder: Опишите задачу подробно
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Приоритет
+      options:
+        - Высокий
+        - Средний
+        - Низкий
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Критерии приёмки
+      description: Как понять, что задача выполнена?
+      placeholder: |
+        - [ ] Критерий 1
+        - [ ] Критерий 2
